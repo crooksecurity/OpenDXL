@@ -21,7 +21,7 @@ import logging
 import os
 import sys
 import requests
-
+import argparse
 from nessus_common import *
 from dxlclient.client import DxlClient
 from dxlclient.client_config import DxlClientConfig
@@ -29,14 +29,20 @@ from dxlclient.message import Message, Request
 from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-
+parser = argparse.ArgumentParser(description="Nessus scan invoker via DXL"
+				 "Usage: nessus_invoker.py -t <IP>|<CIDR>"
+parser.add_argument("-t", default=False, dest="target", help="The network targets to scan")
+args = parser.parse_args()
+if args.target == 0:
+    print "-t is a required option. Use -t <target IP>|<target CIDR>
+    quit()
+scan_type = "Basic Network Scan"
 #bypasses the certificate related warnings while using requests
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 #define the dxl service names
 service_name = "/tenable/service/nessus"
 service_newscan = service_name + "/new_scan"
-
 
 # Import common logging and configuration
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
@@ -90,5 +96,3 @@ with DxlClient(config) as client:
 	attr = soup.find_all(attr)
 	for x in range(0,len(attr),1):
 		print attr[x].string
-	 
-    
