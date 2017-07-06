@@ -30,7 +30,7 @@ from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 parser = argparse.ArgumentParser(description="Nessus scan invoker via DXL"
-				 "Usage: nessus_invoker.py -t <IP>|<CIDR>"
+				 "Usage: nessus_invoker.py -t <IP>|<CIDR>")
 parser.add_argument("-t", default=False, dest="target", help="The network targets to scan")
 args = parser.parse_args()
 if args.target == 0:
