@@ -62,7 +62,7 @@ with DxlClient(config) as client:
 	client.connect()
 
 	req = Request(service_newscan)
-	query = "{0} {1}".format(target, scan_type)
+	query = "{0} {1}".format(args.target, scan_type)
 	print query
         req.payload = query.encode()
 
